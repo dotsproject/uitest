@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css"/>
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css"/>
+	 <link rel="stylesheet" href="sliding_menu.css">
+	  <link rel="stylesheet" href="login.css">
+	   <link rel="stylesheet" href="people.css">
+    <script src="lib/onsen/js/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+    <script>
+      var module = ons.bootstrap('my-app', ['onsen']);
+      module.controller('AppController', function($scope) { 
+	  
+	  $scope.pp=function (){
+	  console.log("stats");
+	  $scope.dynamic = "red";
+	  $scope.app.navi.pushPage('page.html');
+	  //$scope.menu.openMenu();
+	  }
+	  
+	  
+	  });
+      module.controller('PageController', function($scope) {
+        ons.ready(function() {
+          // Init code here
+		  
+        });
+      });
+    </script>
+	<style>
+	.red{
+  color:#FF0000;
+}
+
+	</style>
+  </head>
+  <body ng-controller="AppController">
+    <ons-navigator animation="slide" var="app.navi" >
+  <ons-page>
+    <ons-toolbar>
+      <div class="center">Title</div>
+    </ons-toolbar>
+	<div class="login-form">
+
+        <input type="email" class="text-input--underbar" placeholder="Email" value="">
+        <input type="password" class="text-input--underbar" placeholder="Password" value="">
+        <br><br>
+        <ons-button modifier="large" class="login-button" ng-click="pp()">Log In</ons-button>
+        <br><br>
+        <ons-button modifier="quiet" class="forgot-password">Forgot password?</ons-button>
+      </div>
+
+    <p style="text-align: center">
+	<ons-button modifier="light" ng-click="pp()"> Push</ons-button>
+      <!--<ons-button modifier="light" ng-click="app.navi.pushPage('page.html');"> Push</ons-button>-->
+    </p>
+  </ons-page>
+</ons-navigator>
+  
+  <ons-template id="page.html">
+  <ons-page>
+  
+    <ons-sliding-menu main-page="home.html" menu-page="menu.html" max-slide-distance="260px" type="push" var="menu">
+    </ons-sliding-menu>
+	</ons-page>
+</ons-template>
+
+
+    <ons-template id="menu.html">
+      <ons-page modifier="menu-page">
+        <ons-toolbar modifier="transparent">
+          <div class="right">
+            <ons-toolbar-button class="menu-close" ng-click="menu.close()">
+              </ons-icon>Close 
+            </ons-toolbar-button>
+          </div>
+        </ons-toolbar>
+
+        <ons-list class="menu-list">
+          
+		  <ons-list-item class="menu-item" ng-click="app.navi.pushPage('people.html');">
+            <ons-icon icon="fa-plus"></ons-icon>
+            Friend List
+          </ons-list-item>
+
+		  <ons-list-item class="menu-item" ng-click="menu.close()">
+            <ons-icon icon="fa-plus"></ons-icon>
+            New Post
+          </ons-list-item>
+
+          <ons-list-item class="menu-item" ng-click="menu.close()">
+            <ons-icon icon="fa-bookmark"></ons-icon>
+            Bookmark
+          </ons-list-item>
+
+          <ons-list-item class="menu-item" ng-click="menu.close()">
+            <ons-icon icon="fa-twitter"></ons-icon>
+            Official Twitter
+          </ons-list-item>
+        </ons-list>
+
+        <br>
+
+        <ons-list class="bottom-menu-list">
+          <ons-list-item class="bottom-menu-item" ng-click="menu.close()">
+            Settings
+            <div class="notification menu-notification">3</div>
+          </ons-list-item>
+
+          <ons-list-item class="bottom-menu-item" ng-click="menu.close()">
+            Help
+          </ons-list-item>
+
+          <ons-list-item class="bottom-menu-item" ng-click="menu.close()">
+            Send feedback
+          </ons-list-item>
+        </ons-list>
+
+
+
+      </ons-page>
+    </ons-template>
+	
+	<ons-template id="home.html">
+	<ons-page>
+    <ons-toolbar>
+      <div class="center">Title</div>
+	  <div class="left">
+        <ons-toolbar-button ng-click="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+
+    <p style="text-align: center">
+      <ons-button modifier="light" ng-click="app.navi.pushPage('page.html');"> Welcome</ons-button>
+	  
+    </p>
+  </ons-page>
+	</ons-template>
+	
+	
+	<ons-template id="people.html">
+	
+	
+      <ons-page>
+	  
+	  
+      
+	  
+        <ons-toolbar>
+		
+		 <div class="left"><ons-back-button>Back</ons-back-button></div>
+          <div class="center">
+            Friends
+          </div>
+          <div class="right">
+            <ons-toolbar-button>
+              <ons-icon icon="ion-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+        </ons-toolbar>
+
+        <div class="navigation-bar">
+          <div class="navigation-bar__center">
+
+            <input type="search" ng-model="searchText" class="search-input" style="width: 96%; margin: 6px auto 6px auto;" placeholder="Search">
+
+          </div>
+        </div>
+
+        <ons-list class="person-list" ng-repeat="char in ['A', 'B', 'C', 'D', 'E']">
+          <ons-list-header class="person-list-header">{{char}}</ons-list-header>
+          <ons-list-item class="person" modifier="tappable" ng-repeat="i in [1,2,3,4,5] | filter:searchText">
+            <ons-row>
+              <ons-col width="40px">
+              <img src="images/profile-image-0{{i}}.png" class="person-image">
+              </ons-col>
+              <ons-col class="person-name">
+                {{i}} Ann Taylor
+              </ons-col>
+            </ons-row>
+          </ons-list-item>
+        </ons-list>
+
+
+
+      </ons-page>
+	</ons-template>
+	</div>	
+	
+  </body>
+</html>
